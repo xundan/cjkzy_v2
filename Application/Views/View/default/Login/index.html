@@ -7,7 +7,7 @@
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <meta name="description" content="Page Description">
         <meta name="author" content="CLEVO">
-        <title>块煤网注册</title>
+        <title>快煤网注册</title>
 
         <!-- Bootstrap -->
         <link href="__PUBLIC__/css/bootstrap.min.css" rel="stylesheet">
@@ -23,8 +23,8 @@
 
         <!--bodystyle-->
     <!--style="background-image: url(__PUBLIC__/images/background.gif)">-->
-        <!--<label style="text-align: center">欢迎注册块煤网</label>-->
-        <!--<p style="text-align: center; font-size: 500%; font-family: 微软雅黑">块煤网</p>-->
+        <!--<label style="text-align: center">欢迎注册快煤网</label>-->
+        <!--<p style="text-align: center; font-size: 500%; font-family: 微软雅黑">快煤网</p>-->
         <div style="text-align: center">
             <img src="__PUBLIC__/images/kuaimei.jpg" style="width: 60%;height: 20%;">
         </div>
@@ -36,7 +36,7 @@
             <br>
 
             <div>
-                <input type="password" class="form-control" name="password" id="password" placeholder="请输入密码..." style="width: 97%;padding-left: 2%">
+                <input type="password" class="form-control" name="password" id="password" placeholder="请输入6-20位密码..." style="width: 97%;padding-left: 2%">
             </div>
             <br>
 
@@ -54,10 +54,10 @@
         	<div class="radio" style="margin-top: 3%;font-size: 1.4em;margin-left: 30%">
                 <dl>
                     <dt style="width: 100%">
-                    <label>
-                        <input type="radio" name="role_name" id="buyer" value="buyer"style="width: 1.1em;height: 1.1em" >
-                        工厂用煤用户
-                    </label>
+                        <label>
+                            <input type="radio" name="role_name" id="supplier" value="supplier" style="width: 1.1em;height: 1.1em; ">
+                            煤场、煤矿
+                        </label>
                     </dt>
                     <dt style="width: 100%;margin-top: 1em">
                     <label>
@@ -66,10 +66,10 @@
                     </label>
                     </dt>
                     <dt style="width: 100%;margin-top: 1em">
-                    <label>
-                        <input type="radio" name="role_name" id="supplier" value="supplier" style="width: 1.1em;height: 1.1em; ">
-                        煤场、煤矿
-                    </label>
+                        <label>
+                            <input type="radio" name="role_name" id="buyer" value="buyer"style="width: 1.1em;height: 1.1em" >
+                            工厂用煤用户
+                        </label>
                     </dt>
                 </dl>
         	</div>
@@ -113,6 +113,11 @@
         else if(pswd==''||pswd==null)
         {
             alert('请填写密码');
+            return;
+        }
+        else if(pswd.length<6||pswd.length>20)
+        {
+            alert('密码应在6-12位之间');
             return;
         }
         else if(code==''||code==null)
