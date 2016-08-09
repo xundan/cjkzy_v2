@@ -45,6 +45,7 @@ class LoginController extends Controller
             $clients['phone'] = I('post.phone', '', 'strip_tags');
             $clients['pswd'] = I('post.password', '', 'strip_tags');
             $clients['type'] = I('post.role_name');
+            $clients['remark']='normal';
             $input_code = I('post.verification', '', 'strip_tags');
 
 
@@ -62,7 +63,7 @@ class LoginController extends Controller
                         } else {
                             $register=D('ClientsKMW');
                             $update['remark']='kmw_fail';
-                            $register->where('name='.$clients['name'])->save($update);
+                            $register->where('name='.$clients['name'].' AND pswd='.$clients['pswd'])->save($update);
                             //错误页面的默认跳转页面是返回前一页，通常不需要设置
                             $this->error('远程服务失效，请稍后再尝试', 'index?channel='.$clients['channel'], 5);
                         }
