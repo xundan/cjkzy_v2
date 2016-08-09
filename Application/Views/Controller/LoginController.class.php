@@ -60,7 +60,9 @@ class LoginController extends Controller
                             $this->clearSession();
                             //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
                             $this->success('注册成功，正在前往下载', 'after_success', 3);
+//                            dump($result);
                         } else {
+                            //更新刚才插入的数据，将remark值更新
                             $register=D('ClientsKMW');
                             $update['remark']='kmw_fail';
                             $register->where('name='.$clients['name'].' AND pswd='.$clients['pswd'])->save($update);
