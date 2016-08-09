@@ -15,7 +15,6 @@ class LoginController extends Controller
 
     public function index($channel){
         $this->display();
-        echo 'channel='.$channel;
     }
 
     public function send_code()
@@ -48,6 +47,7 @@ class LoginController extends Controller
             $clients['type'] = I('post.role_name');
             $input_code = I('post.verification', '', 'strip_tags');
 
+
             if ($clients['phone'] == $phone) {
                 if ($input_code == $code) {
                     $res = D('ClientsKMW')->add($clients);
@@ -58,20 +58,23 @@ class LoginController extends Controller
                         if ($result) {
                             $this->clearSession();
                             //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
-                            $this->success('注册成功，正在前往下载', 'success', 3);
+                            $this->success('注册成功，正在前往下载', 'after_success', 3);
                         } else {
+                            $register=D('ClientsKMW');
+                            $update['remark']='kmw_fail';
+                            $register->where('name='.$clients['name'])->save($update);
                             //错误页面的默认跳转页面是返回前一页，通常不需要设置
-                            $this->error('远程服务失效，请稍后再尝试', 'index', 5);
+                            $this->error('远程服务失效，请稍后再尝试', 'index?channel='.$clients['channel'], 5);
                         }
                     } else {
-                        $this->error('远程服务失效，请稍后再尝试', 'index', 5);
+                        $this->error('服务失效，请稍后再尝试');
                     }
 
                 } else {
-                    $this->error("验证码失效或手机号错误");
+                    $this->error("验证码无效或手机号错误");
                 }
             } else {
-                $this->error("验证码失效或手机号错误");
+                $this->error("验证码无效或手机号错误");
             }
         } else {
             $this->error("信息错误");
@@ -80,7 +83,7 @@ class LoginController extends Controller
     }
 
 
-    public function success()
+    public function after_success()
     {
         header("Location: http://www.51kuaimei.com/download?media=8810"); /* 跳转 */
         exit;/* 确保其他php代码不会执行. */
