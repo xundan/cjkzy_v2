@@ -29,7 +29,7 @@
             <img src="__PUBLIC__/images/kuaimei.jpg" style="width: 60%;height: 20%;">
         </div>
         <form action="{:U('Views/Login/register_do')}" method="post" role="form" class="form-horizontal" style="padding-left: 3%; padding-right: 3%" id="form_id">
-
+            <input type="hidden" name="channel" id="channel">
             <div>
                 <input required="required" class="form-control" type="text"  name="phone" id="phone_id" placeholder="请输入手机号..." style="width: 97%;padding-left: 2%">
             </div>
@@ -206,4 +206,11 @@
             }
         });
     }
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+
+    document.getElementById('channel').value=getQueryString('channel');
 </script>

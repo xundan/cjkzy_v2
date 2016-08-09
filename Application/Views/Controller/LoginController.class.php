@@ -12,6 +12,12 @@ class LoginController extends Controller
         $this->display();
     }
 
+
+    public function index($channel){
+        $this->display();
+        echo 'channel='.$channel;
+    }
+
     public function send_code()
     {
         $phone = I("post.phone");
@@ -36,13 +42,14 @@ class LoginController extends Controller
 
 
             $clients['name'] = I('post.phone');
+            $clients['channel']=I('post.channel');
             $clients['phone'] = I('post.phone', '', 'strip_tags');
             $clients['pswd'] = I('post.password', '', 'strip_tags');
             $clients['type'] = I('post.role_name');
-            $codes = I('post.verification', '', 'strip_tags');
+            $input_code = I('post.verification', '', 'strip_tags');
 
             if ($clients['phone'] == $phone) {
-                if ($codes == $code) {
+                if ($input_code == $code) {
                     $res = D('ClientsKMW')->add($clients);
 //                    dump($clients);
 //                    echo 'add result: ' . $res;
@@ -61,10 +68,10 @@ class LoginController extends Controller
                     }
 
                 } else {
-                    $this->error("验证码填写错误");
+                    $this->error("验证码失效或手机号错误");
                 }
             } else {
-                $this->error("请检查手机号");
+                $this->error("验证码失效或手机号错误");
             }
         } else {
             $this->error("信息错误");

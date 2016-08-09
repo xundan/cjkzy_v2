@@ -24,6 +24,7 @@ class ClientsKMWModel extends Model
         "remark",
         "resign_time",
         "source",
+        "channel",
         '_pk'=>"id",
     );
 
