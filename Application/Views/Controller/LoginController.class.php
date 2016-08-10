@@ -56,7 +56,7 @@ class LoginController extends Controller
 //                    echo 'add result: ' . $res;
                     if ($res) {
                         $result = sentToRemote($clients);
-                        if ($result) {
+                        if ($result&&$result['data']) {
                             $this->clearSession();
                             //设置成功后跳转页面的地址，默认的返回页面是$_SERVER['HTTP_REFERER']
                             $this->success('注册成功，正在前往下载', 'after_success', 3);
