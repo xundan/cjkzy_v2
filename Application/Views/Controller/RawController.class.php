@@ -14,8 +14,10 @@ class RawController extends RestController
     protected $allowMethod    = array('get','post','put'); // REST允许的请求类型列表
     protected $allowType      = array('json'); // REST允许请求的资源类型列表
 
+
+
     public function index(){
-        $this->createRaw("test");
+//        $this->createRaw("test");
     }
 
     public function demo(){
@@ -24,10 +26,11 @@ class RawController extends RestController
 
     Public function messages() {
         $data = array(
-            "resultcode"=>"105",
+            "result_code"=>"105",
             "reason"=>"应用未审核超时，请提交认证",
             "result"=>null,
-            "error_code"=>10005
+            "message_id"=>null,
+            "error_code"=>10005,
         );
         switch ($this->_method){
             case 'get': // get请求处理代码
@@ -39,24 +42,59 @@ class RawController extends RestController
                 echo '<br>restful url is correct.';
                 break;
             case 'put': // put请求处理代码
-                if ($this->_type == 'json'){
-
-                }
+//                if ($this->_type == 'json'){
+//
+//                }
                 break;
             case 'post': // post请求处理代码
 
-
-
                 $result1 = $GLOBALS['HTTP_RAW_POST_DATA'] ;
                 $object2 = json_decode($result1, true);
-                $data['resultcode']="201";
-                $data['reason']="新建或修改数据成功";
-                $data['error_code']="0";
-                $data['result']=$result1;
-                $data['object2content']=$object2['content'];
-//                $data['data_type']=$this->_type;
 
-                $this->createRaw($object2['content']);
+                if ($object2){
+                    $content=$object2['content'];
+                    date_default_timezone_set('PRC');
+                    $title = date('y-m-d_h:i:s',time());
+                    $pattern = '/@\s*(.+)\s*\#\$\s([\s\S]*[0-9]{11}[\s\S]*)/';
+                    $res=preg_match($pattern,$content,$match);
+                    $owner=null;
+                    if ($res) {
+                        $owner=$match[1];
+                        $content=$match[2];
+                    } else {
+                        // TODO 不符合格式的消息 通知开发检查手机端过滤逻辑
+                        $data['result_code']="301";
+                        $data['reason']="数据格式不合法，本地过滤失效";
+                        $data['error_code']="10301";
+                        $data['message_id']=$title;
+                        $data['result']=$object2['content'];
+                    }
+                    $title.=substr($content,0,26);
+                    $sender='test';
+                    $sender_wx='test_wx';
+                    $insert = $this->createRaw($title, $content, $owner, $sender, $sender_wx);
+                    if($insert){
+                        $data['result_code']="201";
+                        $data['reason']="新建或修改数据成功";
+                        $data['error_code']="0";
+                        $data['message_id']=$title;
+                        $data['result']=$object2['content'];
+                    }else{
+                        // TODO 插入失败，通知开发人员
+                        $data['result_code']="106";
+                        $data['reason']="数据库操作错误";
+                        $data['error_code']="10006";
+                        $data['message_id']=$title;
+                        $data['result']=$object2['content'];
+                    }
+                }else{
+                    //TODO 数据为空，网络错误，客户端错误，通知开发人员
+                    $data['result_code']="500";
+                    $data['reason']="内部错误";
+                    $data['message_id']=null;
+                    $data['error_code']="10500";
+                    $data['result']=null;
+                }
 
                 $this->response($data,'json');
                 break;
@@ -64,19 +102,32 @@ class RawController extends RestController
     }
 
 
-    private function createRaw($content){
-        $rawAttribute=array(
-            'rid'=>'php_test',
-            'content'=>$content,
-            'sender'=>'test 01',
-            'type'=>'plain',
-            'remark'=>'0',
-        );
-        D('Raw')->add($rawAttribute);
-    }
-
     private function listRaws(){
         dump(D('Raw')->select());
+    }
+
+    /**
+     * @param $title
+     * @param $content
+     * @param $owner
+     * @param $sender
+     * @param $sender_wx
+     * @return mixed    成功与否
+     */
+    public function createRaw($title, $content, $owner, $sender, $sender_wx)
+    {
+        $rawAttribute = array(
+            'rid' => $title,
+            'content' => $content,
+            'sender' => $sender,
+            'type' => 'plain',
+            'remark' => '0',
+            'status'=>0,
+            'owner' => $owner,
+            'sender_wx'=>$sender_wx,
+        );
+        $insert = D('Raw')->add($rawAttribute);
+        return $insert;
     }
 
     private function remarkRaw($rawId){

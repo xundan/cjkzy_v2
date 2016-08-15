@@ -21,6 +21,9 @@ class RawModel extends Model
         "send_time",
         "type",
         "remark",
+        "owner",
+        "sender_wx",
+        "status",
         '_pk'=>"id",
     );
 }
