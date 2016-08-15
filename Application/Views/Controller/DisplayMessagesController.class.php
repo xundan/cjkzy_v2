@@ -63,13 +63,32 @@ class DisplayMessagesController extends Controller
         $data=D('DisplayMessages')->find($id);
         $this->assign("data",$data);
         $this->assign("id",$id);
-        $id_minus = $id-1;
-        $id_plus = $id+1;
+        $id_minus = $this->find_prev($data,$id);
+        $id_plus = $this->find_next($data,$id);
         $url_prev = U('Views/DisplayMessages/showDemo')."?id=$id_minus";
         $url_next = U('Views/DisplayMessages/showDemo')."?id=$id_plus";
         $this->assign("prev",$url_prev);
         $this->assign("next",$url_next);
         $this->display();
     }
+
+    public function check(){
+        echo 'checked';
+    }
+
+    public function delete($id){
+        echo 'deleted';
+    }
+
+    public function find_prev($data,$id)
+    {
+        return $id - 1;
+    }
+
+    public function find_next($data,$id)
+    {
+        return $id + 1;
+    }
+
 
 }
