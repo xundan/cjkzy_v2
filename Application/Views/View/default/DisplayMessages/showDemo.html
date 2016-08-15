@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>ShowMessages</title>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-2.2.4.min.js"></script>
 </head>
 <style type="text/css">
     table.gridtable {
+        width: 100%;
         font-family: verdana,arial,sans-serif;
         font-size:11px;
         color:#333333;
@@ -27,7 +29,28 @@
         border-color: #666666;
         background-color: #ffffff;
     }
+    .checkbox {
+        width: 19px;
+        height: 25px;
+        padding: 0 5px 0 0;
+        /*display: block;*/
+        /*clear: left;*/
+        /*float: left;*/
+    }
+    .checkbox2 {
+        width: 35px;
+        height: 30px;
+        padding: 0 5px 0 0;
+        /*display: block;*/
+        /*clear: left;*/
+        /*float: left;*/
+    }
+    .lable1{
 
+    }
+    .lable2{
+
+    }
 </style>
 <body>
 
@@ -41,7 +64,6 @@
     		<tr>
     			<th>id</th>
     			<th>标题</th>
-    			<th>内容</th>
     			<th>记录时间</th>
     		</tr>
     	</thead>
@@ -49,12 +71,95 @@
     		<tr>
     			<td>{$data['id']}</td>
     			<td>{$data['title']}</td>
-    			<td>{$data['content']}</td>
     			<td>{$data['record_time']}</td>
     		</tr>
+            <th colspan="3">内容</th>
+            <tr>
+                <td colspan="3" align="center">{$data['content']}</td>
+            </tr>
     	</tbody>
     </table>
 
+    <!--<form id="formid1" onsubmit="alert(this.test.value);return false;">-->
+
+    <!--</form>-->
+
+    <form action="{:U('Views/DisplayMessages/check')}?id={$id}" method="post">
+        <!--删除按钮-->
+        <div>
+        <input type="button" id="Button1" name="Button1" onclick="delcfm()" value="删除" style="width:20%;height: 10%"><br/>
+        </div>
+        <!--标签复选框-->
+        <fieldset style="font-size: 30px">
+            <legend>选择标签</legend>
+            <label class="label1"><input type="checkbox" name="tag[]" value="求购" class="checkbox2"/>求购</label>
+            <label class="label1"><input type="checkbox" name="tag[]" value="供应" class="checkbox2"/>供应</label>
+            <label class="label1"><input type="checkbox" name="tag[]" value="求车" class="checkbox2"/>求车</label>
+            <label class="label1"><input type="checkbox" name="tag[]" value="空车" class="checkbox2"/>空车</label>
+            <label class="label1"><input type="checkbox" name="tag[]" value="其他" class="checkbox2"/>其他</label><br/>
+            <label><input type="checkbox" name="tag[]" value="陕西" class="checkbox"/>陕西</label>
+            <label><input type="checkbox" name="tag[]" value="山西" class="checkbox"/>山西</label>
+            <label><input type="checkbox" name="tag[]" value="河北" class="checkbox"/>河北</label>
+            <label><input type="checkbox" name="tag[]" value="河北" class="checkbox"/>河北</label>
+            <label><input type="checkbox" name="tag[]" value="天津" class="checkbox"/>天津</label><br/>
+            <label><input type="checkbox" name="tag[]" value="河南" class="checkbox"/>河南</label>
+            <label><input type="checkbox" name="tag[]" value="山东" class="checkbox"/>山东</label>
+            <label><input type="checkbox" name="tag[]" value="江苏" class="checkbox"/>江苏</label>
+            <label><input type="checkbox" name="tag[]" value="安徽" class="checkbox"/>安徽</label>
+            <label><input type="checkbox" name="tag[]" value="湖北" class="checkbox"/>湖北</label><br/>
+            <label><input type="checkbox" name="tag[]" value="湖南" class="checkbox"/>湖南</label>
+            <label><input type="checkbox" name="tag[]" value="四川" class="checkbox"/>四川</label>
+            <label><input type="checkbox" name="tag[]" value="重庆" class="checkbox"/>重庆</label>
+            <label><input type="checkbox" name="tag[]" value="云南" class="checkbox"/>云南</label>
+            <label><input type="checkbox" name="tag[]" value="贵州" class="checkbox"/>贵州</label><br/>
+            <label><input type="checkbox" name="tag[]" value="西部" class="checkbox"/>西部</label>
+            <label><input type="checkbox" name="tag[]" value="东北" class="checkbox"/>东北</label>
+            <label><input type="checkbox" name="tag[]" value="南方" class="checkbox"/>南方</label>
+            <label><input type="checkbox" name="tag[]" value="内蒙古" class="checkbox"/>内蒙古</label>
+        </fieldset>
+            <input type="submit" name="submit" value="提交" style=""/>
+    </form>
+
+    <script>
+        function delcfm() {
+            if (!confirm("确认要删除？")) {
+//                取消不变
+                window.event.returnValue = false;
+//                alert('notdel');
+            }else {
+//                处理数据
+//                alert(window.location.search);
+//                $urlpram=window.location.search;
+//                $id=window.location.search.substr(4);
+                $id={$data['id']};
+//                $id=1;
+                alert($id);
+                $.ajax({
+//                    url:"{$next}",
+                    url:"__CONTROLLER__/delete",
+                    type:"POST",
+                    data:{"id":$id},
+//                    dataType:"ja/son",
+                    error:function(){
+                        alert('Error');
+                    },
+                    success:function($result){
+                        //$a=$result;
+//                        $b=json_decode(data);
+                        alert(2);
+//                        $a = jsonPac
+                        alert($result);
+//                      跳转到下个id
+                        alert('删除成功');
+                        window.location='{$next}';
+                    }
+                });
+
+            }
+        }
+    </script>
+
 
 </body>
+
 </html>
