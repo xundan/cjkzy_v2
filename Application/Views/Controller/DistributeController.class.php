@@ -48,6 +48,7 @@ class DistributeController extends RestController
             "content"=>null,
             "status"=>0,
             "remark"=>null,
+            "invalid_id"=>1,
             "handler"=>null,
             "recorder"=>$recorder,
             "owner"=>null,
