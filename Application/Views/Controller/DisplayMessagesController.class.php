@@ -46,6 +46,7 @@ class DisplayMessagesController extends Controller
 
         foreach ($tags as $tag){
             echo '<br>'.$tag;
+
         }
 
 
