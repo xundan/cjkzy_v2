@@ -46,7 +46,7 @@
         /*float: left;*/
     }
     .lable1{
-
+        margin-right: 5%;
     }
     .lable2{
 
@@ -55,8 +55,8 @@
 <body>
 
     <div align="center">
-        <input type="button" value="上一条" id="prevM" name="prevM" onclick="location.href='{$prev}'"  style="width: 10%;flex: auto"/>
-        <input type="button" value="下一条" id="nextM" name="nextM" onclick="location.href='{$next}'"  style="width: 10%;flex: auto"/>
+        <input type="button" value="上一条" id="prevM" name="prevM" onclick="location.href='{$prev}'"  style="width: 10%;flex: auto;margin-bottom: 20px;height: 30px"/>
+        <input type="button" value="下一条" id="nextM" name="nextM" onclick="location.href='{$next}'"  style="width: 10%;flex: auto;margin-bottom: 20px;height: 30px"/>
     </div>
 
     <table class="gridtable">
@@ -86,38 +86,40 @@
 
     <form action="{:U('Views/DisplayMessages/check')}?id={$id}" method="post">
         <!--删除按钮-->
-        <div>
-        <input type="button" id="Button1" name="Button1" onclick="delcfm()" value="删除" style="width:20%;height: 10%"><br/>
+        <div style="text-align: center;margin-top: 20px;margin-bottom: 20px">
+        <input type="button" id="Button1" name="Button1" onclick="delcfm()" value="删除" style="width:10%;height: 5%"><br/>
         </div>
         <!--标签复选框-->
         <fieldset style="font-size: 30px">
             <legend>选择标签</legend>
-            <label class="label1"><input type="checkbox" name="tag[]" value="求购" class="checkbox2"/>求购</label>
-            <label class="label1"><input type="checkbox" name="tag[]" value="供应" class="checkbox2"/>供应</label>
-            <label class="label1"><input type="checkbox" name="tag[]" value="求车" class="checkbox2"/>求车</label>
-            <label class="label1"><input type="checkbox" name="tag[]" value="空车" class="checkbox2"/>空车</label>
-            <label class="label1"><input type="checkbox" name="tag[]" value="其他" class="checkbox2"/>其他</label><br/>
-            <label><input type="checkbox" name="tag[]" value="陕西" class="checkbox"/>陕西</label>
-            <label><input type="checkbox" name="tag[]" value="山西" class="checkbox"/>山西</label>
-            <label><input type="checkbox" name="tag[]" value="河北" class="checkbox"/>河北</label>
-            <label><input type="checkbox" name="tag[]" value="河北" class="checkbox"/>河北</label>
-            <label><input type="checkbox" name="tag[]" value="天津" class="checkbox"/>天津</label><br/>
-            <label><input type="checkbox" name="tag[]" value="河南" class="checkbox"/>河南</label>
-            <label><input type="checkbox" name="tag[]" value="山东" class="checkbox"/>山东</label>
-            <label><input type="checkbox" name="tag[]" value="江苏" class="checkbox"/>江苏</label>
-            <label><input type="checkbox" name="tag[]" value="安徽" class="checkbox"/>安徽</label>
-            <label><input type="checkbox" name="tag[]" value="湖北" class="checkbox"/>湖北</label><br/>
-            <label><input type="checkbox" name="tag[]" value="湖南" class="checkbox"/>湖南</label>
-            <label><input type="checkbox" name="tag[]" value="四川" class="checkbox"/>四川</label>
-            <label><input type="checkbox" name="tag[]" value="重庆" class="checkbox"/>重庆</label>
-            <label><input type="checkbox" name="tag[]" value="云南" class="checkbox"/>云南</label>
-            <label><input type="checkbox" name="tag[]" value="贵州" class="checkbox"/>贵州</label><br/>
-            <label><input type="checkbox" name="tag[]" value="西部" class="checkbox"/>西部</label>
-            <label><input type="checkbox" name="tag[]" value="东北" class="checkbox"/>东北</label>
-            <label><input type="checkbox" name="tag[]" value="南方" class="checkbox"/>南方</label>
-            <label><input type="checkbox" name="tag[]" value="内蒙古" class="checkbox"/>内蒙古</label>
+            <label class="label1" style="margin-right: 5%"><input type="checkbox" name="tag[]" value="求购" class="checkbox2"/>求购</label>
+            <label class="label1" style="margin-right: 5%"><input type="checkbox" name="tag[]" value="供应" class="checkbox2"/>供应</label>
+            <label class="label1" style="margin-right: 5%"><input type="checkbox" name="tag[]" value="求车" class="checkbox2"/>求车</label>
+            <label class="label1" style="margin-right: 5%"><input type="checkbox" name="tag[]" value="车源" class="checkbox2"/>车源</label>
+            <label class="label1" style="margin-right: 5%"><input type="checkbox" name="tag[]" value="煤炭" class="checkbox2"/>煤炭</label>
+            <label class="label1" style="margin-right: 5%"><input type="checkbox" name="tag[]" value="非煤炭" class="checkbox2"/>非煤炭</label>
+            <label class="label1" style="margin-right: 5%"><input type="checkbox" name="tag[]" value="其他" class="checkbox2"/>其他</label><br/>
+            <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="陕西" class="checkbox"/>陕西</label>
+            <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="山西" class="checkbox"/>山西</label>
+            <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="河北" class="checkbox"/>河北</label>
+            <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="河北" class="checkbox"/>河北</label>
+            <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="天津" class="checkbox"/>天津</label><br/>
+            <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="河南" class="checkbox"/>河南</label>
+            <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="山东" class="checkbox"/>山东</label>
+            <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="江苏" class="checkbox"/>江苏</label>
+            <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="安徽" class="checkbox"/>安徽</label>
+            <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="湖北" class="checkbox"/>湖北</label><br/>
+            <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="湖南" class="checkbox"/>湖南</label>
+            <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="四川" class="checkbox"/>四川</label>
+            <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="重庆" class="checkbox"/>重庆</label>
+            <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="云南" class="checkbox"/>云南</label>
+            <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="贵州" class="checkbox"/>贵州</label><br/>
+            <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="西部" class="checkbox"/>西部</label>
+            <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="东北" class="checkbox"/>东北</label>
+            <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="南方" class="checkbox"/>南方</label>
+            <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="内蒙古" class="checkbox"/>内蒙古</label>
         </fieldset>
-            <input type="submit" name="submit" value="提交" style=""/>
+            <center><input type="submit" name="submit" value="提交" style="width: 10%;height: 5%;margin-top: 20px"/></center>
     </form>
 
     <script>
@@ -143,12 +145,12 @@
                     error:function(){
                         alert('Error');
                     },
-                    success:function($result){
+                    success:function(data){
                         //$a=$result;
 //                        $b=json_decode(data);
                         alert(2);
 //                        $a = jsonPac
-                        alert($result);
+                        alert(data);
 //                      跳转到下个id
                         alert('删除成功');
                         window.location='{$next}';
