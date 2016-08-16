@@ -7,7 +7,6 @@
  */
 
 namespace Views\Controller;
-
 use Think\Controller;
 
 class DisplayMessagesController extends Controller
@@ -53,16 +52,18 @@ class DisplayMessagesController extends Controller
             $data['label_name'] = $tag;
             $data['invalid_id'] = 0;
 //            echo '<br>'.$tag;
-            $result = null;
+            // 如果关系已经存在，刷新有效性，否则就insert
             if ($this->exist($data['object_rid'], $data['label_name'])) {
-                $result = $Relations->
+                // 如果数据库没有变化，下面表达式会返回0，（所以不能把它作为成功失败的判断依据）
+                // save只返回变化的行数
+                $Relations->
                 where("object_rid='%s' and label_name='%s'", array($rid, $tag))->save($data);
             } else {
                 $result = $Relations->add($data);
-            }
-            if (!$result) { // 如果有一个标签插入失败
-                // TODO 记录日志
-                $all_commit = false;
+                if (!$result) { // 如果有一个标签插入失败
+                    // TODO 记录日志
+                    $all_commit = false;
+                }
             }
         }
         if ($all_commit) { // 标签全部更新了才去更新小消息状态
@@ -74,10 +75,16 @@ class DisplayMessagesController extends Controller
             $check = D('Message')->save($update_trans);
             if ($check == false) {
                 //TODO 写日志
+                $this->error('提交失败401','showDemo?id='.$id);
+            }else{
+                $this->success('提交成功', 'showDemo?id='.$this->find_next($id));
             }
+
         } else {
             // TODO 写日志
+            $this->error('提交失败402','showDemo?id='.$id);
         }
+
 
     }
 
