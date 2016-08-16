@@ -82,12 +82,12 @@
     <!--<form id="formid1" onsubmit="alert(this.test.value);return false;">-->
 
     <!--</form>-->
-
+        <div style="text-align: center;margin-top: 20px;margin-bottom: 20px">
+            <input type="button" id="Button1" name="Button1" onclick="delcfm()" value="删除" style="width:10%;height: 30px"><br/>
+        </div>
     <form action="{:U('Views/DisplayMessages/check')}?id={$id}" method="post">
         <!--删除按钮-->
-        <div style="text-align: center;margin-top: 20px;margin-bottom: 20px">
-        <input type="button" id="Button1" name="Button1" onclick="delcfm()" value="删除" style="width:10%;height: 5%"><br/>
-        </div>
+
         <!--标签复选框-->
         <fieldset style="font-size: 30px">
             <legend>选择标签</legend>
@@ -118,7 +118,6 @@
             <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="南方" class="checkbox"/>南方</label>
             <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="内蒙古" class="checkbox"/>内蒙古</label>
         </fieldset>
-            <center><input type="submit" name="submit" value="提交" style="width: 10%;height: 5%;margin-top: 20px"/></center>
     </form>
 
     <script>
@@ -134,7 +133,7 @@
 //                $id=window.location.search.substr(4);
                 $id={$data['id']};
 //                $id=1;
-                alert($id);
+//                alert($id);
                 $.ajax({
 //                    url:"{$next}",
                     url:"__CONTROLLER__/delete",
@@ -147,17 +146,17 @@
                     success:function(data){
                         //$a=$result;
 //                        $b=json_decode(data);
-                        alert(2);
+//                        alert(2);
 //                        $a = jsonPac
-                        alert(data);
+//                        alert(data);
 //                      跳转到下个id
                         alert('删除成功');
                         window.location='{$next}';
                     }
                 });
-
             }
         }
+
     </script>
 
 
