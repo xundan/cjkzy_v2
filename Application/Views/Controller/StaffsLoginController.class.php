@@ -29,7 +29,7 @@ class StaffsLoginController extends Controller
             $data['password'] = I('post.password', '', 'strip_tags');
             $data['phone'] = I('post.phone', '', 'strip_tags');
             $data['name'] = I('post.name');
-            $data['email'] = I('post.name');
+            $data['email'] = I('post.email');
 //            dump($name);
             $result = $Staff->where("username='$name'")->find();
 //            dump($result);

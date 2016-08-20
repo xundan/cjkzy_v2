@@ -20,6 +20,9 @@ class DisplayMessagesController extends Controller
             $data = D('DisplayMessages')->where("invalid_id=0 AND status=0 AND id=" . $id)->find();
             $this->assign("data", $data);
             $this->assign("id", $id);
+            $cur_user = $_SESSION['cur_user'];
+            $username = $cur_user['name'];
+            $this->assign('username',$username);
             $id_minus = $this->find_prev($id);
             $id_plus = $this->find_next($id);
             if (!$data) {
