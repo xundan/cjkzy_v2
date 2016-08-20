@@ -14,30 +14,36 @@ class DisplayMessagesController extends Controller
 
     public function showDemo($id)
     {
-        // 有where包装的时候不要直接find($id)，否则where会失效
-        $data = D('DisplayMessages')->where("invalid_id=0 AND status=0 AND id=" . $id)->find();
-        $this->assign("data", $data);
-        $this->assign("id", $id);
-        $id_minus = $this->find_prev($id);
-        $id_plus = $this->find_next($id);
-        if (!$data) {
-            echo "<br><h1>没有更多数据了。</h1>";
-        }
+//        dump($_SESSION['cur_user']);
+        if ($_SESSION['cur_user']) {
+            // 有where包装的时候不要直接find($id)，否则where会失效
+            $data = D('DisplayMessages')->where("invalid_id=0 AND status=0 AND id=" . $id)->find();
+            $this->assign("data", $data);
+            $this->assign("id", $id);
+            $id_minus = $this->find_prev($id);
+            $id_plus = $this->find_next($id);
+            if (!$data) {
+                echo "<br><h1>没有更多数据了。</h1>";
+            }
 
-        if ($id_minus == -1) {
-            echo "<br><h1>已经是第一条了。</h1>";
-            $id_minus = $id;
-        }
-        if ($id_plus == -1) {
-            echo "<br><h1>已经是最后一条了。</h1>";
-            $id_plus = $id;
-        }
-        $url_prev = U('Views/DisplayMessages/showDemo') . "?id=$id_minus";
-        $url_next = U('Views/DisplayMessages/showDemo') . "?id=$id_plus";
+            if ($id_minus == -1) {
+                echo "<br><h1>已经是第一条了。</h1>";
+                $id_minus = $id;
+            }
+            if ($id_plus == -1) {
+                echo "<br><h1>已经是最后一条了。</h1>";
+                $id_plus = $id;
+            }
+            $url_prev = U('Views/DisplayMessages/showDemo') . "?id=$id_minus";
+            $url_next = U('Views/DisplayMessages/showDemo') . "?id=$id_plus";
 //        $url_delete = U('Views/DisplayMessages/delete')."?id=$id";
-        $this->assign("prev", $url_prev);
-        $this->assign("next", $url_next);
-        $this->display();
+            $this->assign("prev", $url_prev);
+            $this->assign("next", $url_next);
+            $this->display();
+        }else{
+            header("Content-Type:text/html; charset=utf-8");//解决乱码
+            $this->redirect( 'StaffsLogin/Login','',3,"您并没有登录，正在返回登录");
+        }
     }
 
     public function check($id)

@@ -56,6 +56,7 @@
     <div align="center">
         <input type="button" value="上一条" id="prevM" name="prevM" onclick="location.href='{$prev}'"  style="width: 10%;flex: auto;margin-bottom: 20px;height: 30px"/>
         <input type="button" value="下一条" id="nextM" name="nextM" onclick="location.href='{$next}'"  style="width: 10%;flex: auto;margin-bottom: 20px;height: 30px"/>
+        <a href="__ROOT__/StaffsLogin/logout" style="float: right;font-size: 15px">'{$username}'登出</a>
     </div>
 
     <table class="gridtable">
@@ -130,8 +131,8 @@
             }else {
 //                处理数据
 //                alert(window.location.search);
-//                $urlpram=window.location.search;
-//                $id=window.location.search.substr(4);
+//                $urlpram=window.location.search;      //获得当前url网址
+//                $id=window.location.search.substr(4);         //取得ID字段
                 $id={$data['id']};
 //                $id=1;
 //                alert($id);
