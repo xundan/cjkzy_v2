@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
+ * crontab调用从生消息表转移数据至消息表
  * User: CLEVO
  * Date: 2016/8/9
  * Time: 14:33
@@ -48,7 +48,7 @@ class DistributeController extends RestController
             "content"=>null,
             "status"=>0,
             "remark"=>null,
-            "invalid_id"=>1,
+            "invalid_id"=>0,
             "handler"=>null,
             "recorder"=>$recorder,
             "owner"=>null,

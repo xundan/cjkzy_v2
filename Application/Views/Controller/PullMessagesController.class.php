@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
+ * 微信后台调用处理小消息
  * User: CLEVO
  * Date: 2016/8/24
  * Time: 17:29
@@ -24,7 +24,7 @@ class PullMessagesController extends RestController
     {
         $data = array(
             "result_code" => "105",
-            "reason" => "应用未审核超时，请提交认证",
+            "reason" => "超时，请检查调用",
             "result" => null,
             "message" => null,
             "error_code" => 10005,
@@ -38,7 +38,25 @@ class PullMessagesController extends RestController
                     $data['reason'] = "获取成功";
                     $data['result'] = "OK";
                     $data['error_code'] = 0;
-                } else {
+                } elseif($msg===0) { // 关系表有数据，但是信息表没有该id
+                    $data['message'] = "";
+                    $data['result_code'] = "505";
+                    $data['reason'] = "找不到该消息，请检查数据库";
+                    $data['result'] = "FAIL";
+                    $data['error_code'] = 10405;
+                } elseif($msg===null) { // wx为空
+                    $data['message'] = "";
+                    $data['result_code'] = "500";
+                    $data['reason'] = "参数错误";
+                    $data['result'] = "FAIL";
+                    $data['error_code'] = 10500;
+                } elseif($msg===false) { // 没有消息了
+                    $data['message'] = "";
+                    $data['result_code'] = "404";
+                    $data['reason'] = "没有更多的消息了";
+                    $data['result'] = "OK";
+                    $data['error_code'] = 10404;
+                } else { // 其他错误
                     $data['message'] = "";
                     $data['result_code'] = "501";
                     $data['reason'] = "内部错误";
@@ -62,9 +80,7 @@ class PullMessagesController extends RestController
         );
         switch ($this->_method) {
             case 'get':
-                $update_data['invalid_id'] = 100;
-                $update = D('RelationM2W')->where("invalid_id=0 AND msg_id=$msg_id AND wx='$wx'")
-                    ->save($update_data);
+                $update = $this->set_used($wx, $msg_id);
                 if ($update) {
                     $data['result_code'] = "201";
                     $data['reason'] = "修改数据成功";
@@ -101,10 +117,27 @@ class PullMessagesController extends RestController
         if ($relation) {
             $msg_id = $relation['msg_id'];
             $msg = D('message')->find($msg_id);
+            if ($msg) {
+                $this->set_used($wx, $msg_id);
+            }
             return $msg;
 
         }
         return false;
+    }
+
+    /**
+     * @param $wx
+     * @param $msg_id
+     * @return bool
+     */
+    private function set_used($wx, $msg_id)
+    {
+        $update_data['invalid_id'] = 100;
+        $update = D('RelationM2W')->where("invalid_id=0 AND msg_id=$msg_id AND wx='$wx'")
+            ->save($update_data);
+        // TODO 此处应该更新小消息表中的publish_time
+        return $update;
     }
 
 

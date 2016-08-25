@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
+ * 小消息的审核与更新
  * User: LX
  * Date: 2016/8/12
  * Time: 10:29
@@ -142,7 +142,6 @@ class DisplayMessagesController extends Controller
         $wx_arr = $arr;
 // 查询该label对应的微信号，放入数组
         $labels = D('Label')->where("invalid_id=%d and label_name='%s'", array(0, $tag))->select();
-        var_dump($labels);
         if ($labels) {
             // 遍历所有$tag作为标签名对应的微信号
             foreach ($labels as $label_info) {
