@@ -54,8 +54,8 @@ class RawController extends RestController
                 if ($object2){
                     $content=$object2['content'];
                     date_default_timezone_set('PRC');
-                    $title = date('y-m-d_h:i:s',time());
-                    $pattern = '/@\s*(.+)\s*\#\$\s([\s\S]*[0-9]{11}[\s\S]*)/';
+                    $title = date('y-m-d_h:i',time());
+                    $pattern = '/@\s*(.+)\s*\#\$([\s\S]*[0-9]{11}[\s\S]*)/';
                     $res=preg_match($pattern,$content,$match);
                     $owner=null;
                     if ($res) {
@@ -187,6 +187,12 @@ class RawController extends RestController
      */
     public function createRaw($title, $content, $owner, $sender, $sender_wx)
     {
+        //解决短时间内重复调用问题
+        $duplicate_data = D('Raw')->where("rid = '$title'")->find();
+        if($duplicate_data){
+            return $duplicate_data;
+        }
+
         $rawAttribute = array(
             'rid' => $title,
             'content' => $content,
