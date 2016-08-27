@@ -112,11 +112,17 @@ class PullMessagesController extends RestController
      */
     private function get_message($wx)
     {
+        //不能瞎echo，否则GLOBAL解析json会出错
+//        echo "start ";
         if (!$wx) return null;
         $relation = D("RelationM2W")->where("invalid_id=0 AND wx='" . $wx . "'")->find();
+
         if ($relation) {
+//            echo "here is $relation";
             $msg_id = $relation['msg_id'];
+//            echo "<br/>here is $msg_id";
             $msg = D('message')->find($msg_id);
+//            echo "<br/> that's $msg";
             if ($msg) {
                 $this->set_used($wx, $msg_id);
             }

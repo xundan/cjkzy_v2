@@ -53,6 +53,8 @@ class RawController extends RestController
 
                 if ($object2){
                     $content=$object2['content'];
+                    $sender=$object2['sender'];
+                    $sender_wx=$object2['sender_wx'];
                     date_default_timezone_set('PRC');
                     $title = date('y-m-d_h:i',time());
                     $pattern = '/@\s*(.+)\s*\#\$([\s\S]*[0-9]{11}[\s\S]*)/';
@@ -70,8 +72,7 @@ class RawController extends RestController
                         $data['result']=$object2['content'];
                     }
                     $title.=substr($content,0,26);
-                    $sender='test';
-                    $sender_wx='test_wx';
+
                     $insert = $this->createRaw($title, $content, $owner, $sender, $sender_wx);
                     if($insert){
                         $data['result_code']="201";
